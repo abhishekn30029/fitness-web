@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="card" >
+            <div class="innerbox" id="card">
+                <div class="cardfront" style="background-image: linear-gradient(rgba(22, 22, 22, 0.8),rgba(22, 22, 22, 0.8)),url('{% static 'images/loginbg.jpg' %}');">
+                    <h2>Login</h2>
+                    <form  method="post"> 
+                        {% csrf_token %}
+                        <input type="email" class="inputbox" placeholder="email" required name="email">
+                        <input type="password" class="inputbox" placeholder="password" required name="password">
+                        <button type="submit" class="submit-btn">Login</button>
+                        
+                    </form>
+                    <button type="button" class="btn" onclick="opensignup()">Sign up</button>
+                </div>
+                <div class="cardback" style="background-image: linear-gradient(rgba(22, 22, 22, 0.8),rgba(22, 22, 22, 0.8)),url('{% static 'images/loginbg.jpg' %}');">
+                    <h2>Sign Up</h2>
+                    <form  method="post">
+                        {% csrf_token %}
+                        <input type="text" class="inputbox" placeholder="full name" required name="fullname">
+                        <input type="email" class="inputbox" placeholder="email" required name="email">
+                        <input type="radio" class="radio" name="gender" required name="gender" value="male">
+                        <span>male</span>
+                        <input type="radio" class="radio"  name="gender" required name="gender" value="female">
+                        <span>female</span>
+                        <input type="number" class="inputbox" placeholder="Age" required name="age">
+                        <input type="password" class="inputbox" placeholder="password" required name="password">
+                        <button type="submit" class="submit-btn">Sign up</button>
+                        
+                    </form>
+                    <button type="button" class="btn" onclick="openlogin()">Login</button>
+                </div>
+                
+            </div>
+           <p>{{msg}}</p>
+        </div>
+      
+
+    </div>
+    <script>
+        var card=document.getElementById("card");
+        function opensignup()
+        {
+            card.style.transform="rotateY(-180deg)";
+        }
+        function openlogin()
+        {
+            card.style.transform="rotateY(0deg)";
+        }
+    </script>
+    
+    
+    </body>
+</html>

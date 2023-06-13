@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You trainer</title>
+    <link rel="stylesheet" href="{% static 'css/yourtrainer.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body style="background-image: linear-gradient(rgba(22, 22, 22, 0.95),rgba(22, 22, 22, 0.95)),url('{% static 'images/indexbg.jpg' %}');">
+    <div class="navbar">
+        <img src="{% static 'images/logo.png' %}">
+        {% if dt.tstatus or dt.cstatus %}
+        <p style="color:white;margin-top: 20px;font-size: 25px;">welcome {{dt.name}}</p>
+        {% endif %}
+        
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'trainers' %}">trainers</a></li>
+        {% if dt.tstatus%}
+        <li><a href="{% url 'yourclients' %}">yourclients</a></li>
+        {% endif %}
+        {% if dt.cstatus%}
+        <li><a href="{% url 'yourtrainer' %}">yourtrainer</a></li>
+        {% endif %}
+        {% if dt.tstatus or dt.cstatus%}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+        {% if not dt.cstatus and not dt.tstatus%}
+        <li><div class="dropdown">
+            <button class="dropbtn">signup/login</button>
+            <div class="dropdown-content">
+              <a href="{% url 'trainerlogin' %}">trainer</a>
+              <a href="{% url 'clientlogin' %}">client</a>
+              
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        
+    </ul>
+   
+</div>
+
+    {% if sstatus %}
+    <div class="container">
+        <img src="{% static 'images/indexbg.jpg' %}">
+        <p class="name">{{trainer.name}}</p>
+        <hr color="yellow" >
+        <p class="trainer-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores harum porro doloremque beatae quasi suscipit! Porro maiores quasi fugit minima nesciunt. Tenetur non error amet dolorum animi culpa quas.</p>
+            {% if not rstatus%}
+            <form  method="post">
+            {% csrf_token %}
+            <div class="star-widget">
+            <input type="radio" name="rate" id="rate5" value="5">
+            <label for="rate5" class="fas fa-star" ></label>
+            <input type="radio" name="rate" id="rate4" value="4">
+            <label for="rate4" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate3" value="3">
+            <label for="rate3" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate2" value="2">
+            <label for="rate2" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate1" value="1">
+            <label for="rate1" class="fas fa-star"></label>
+            </div>
+            <button type="submit" class="rate-btn">Rate</button>
+        </form>
+        {% else %}
+        <p style="color:yellow;font-weight: 600; font-size: 20px;">{{trainer.rating}}/5 &#11088({{trainer.count}})</p>
+        {% endif %}
+        <button type="submit" class="diet-btn">Your Diet Plan</button>
+        
+    </div>
+    {% else %}
+    <p style="color:red;text-align:center;font-size:40px;font-weight:700">you not subscribe to any trainer please subscribe</p>
+    {% endif %}
+    
+    
+    
+</body>
+</html>

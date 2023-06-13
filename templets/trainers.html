@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/trainers.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <title>trainer</title>
+</head>
+<body style="background-image: linear-gradient(rgba(22, 22, 22, 0.95),rgba(22, 22, 22, 0.95)),url('{% static 'images/indexbg.jpg' %}');">
+    <div class="navbar">
+        <img src="{% static 'images/logo.png' %}">
+        {% if dt.tstatus or dt.cstatus %}
+        <p style="color:white;margin-top: 20px;font-size: 25px;">welcome {{dt.name}}</p>
+        {% endif %}
+        
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'trainers' %}">trainers</a></li>
+        {% if dt.tstatus%}
+        <li><a href="{% url 'yourclients' %}">yourclients</a></li>
+        {% endif %}
+        {% if dt.cstatus%}
+        <li><a href="{% url 'yourtrainer' %}">yourtrainer</a></li>
+        {% endif %}
+        {% if dt.tstatus or dt.cstatus%}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+        {% if not dt.cstatus and not dt.tstatus%}
+        <li><div class="dropdown">
+            <button class="dropbtn">signup/login</button>
+            <div class="dropdown-content">
+              <a href="{% url 'trainerlogin' %}">trainer</a>
+              <a href="{% url 'clientlogin' %}">client</a>
+              
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        
+    </ul>
+   
+</div>
+    <p style="font-size:25px;color:black;background-color:rgba(134, 255, 215, 0.829);text-align:center;">{{msg}}</p>
+    
+    {% for i in dest %}
+    <div class="trainer-block">
+        <div class="trainer-image">
+            <img src="{% static 'images/indexbg.jpg'%}">
+        </div>
+        <div class="des-btn">
+            <h2 class="trainer-name">{{i.tname}}</h2>
+            <p class="trainer-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, error iste, asperiores natus repellat sit ut tempora dolores cum pariatur temporibus quaerat mollitia totam perspiciatis quia. Eaque, laborum? Eligendi, quidem!</p>
+            <div style="display:flex;justify-content:space-between; padding-top:20px;">
+            <p class="rating" style="margin-left: 20px;">{{i.rating}}/5&#11088 ({{i.count}})</p>
+            
+            <p class="cost" style="margin-right:30px;">{{i.price}}&#x20B9;/month</p>
+            </div>
+            <form method="post">
+            {% csrf_token %}
+            <input type="" value={{i.id}} style="display: none;" name="tid">
+            {% if not dt.tstatus%}    
+            <button type="submit" class="button">subscribe now</button>
+            {% endif %}
+            </form>
+        </div>
+
+    </div>
+    </div>
+    {% endfor %}
+</body>
+</html>

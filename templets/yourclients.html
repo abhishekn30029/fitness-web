@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/yourclient.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <title>your clints</title>
+    <style>
+        input:hover,.upload-btn:hover{
+    opacity: 0.5;
+    }
+    </style>
+</head>
+<body style=" background-image: linear-gradient(rgba(22, 22, 22, 0.95),rgba(22, 22, 22, 0.95)),url('{% static 'images/indexbg.jpg' %}');">
+    <div class="navbar">
+        <img src="{% static 'images/logo.png' %}">
+        {% if dt.tstatus or dt.cstatus %}
+        <p style="color:white;margin-top: 20px;font-size: 25px;">welcome {{dt.name}}</p>
+        {% endif %}
+        
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'trainers' %}">trainers</a></li>
+        {% if dt.tstatus%}
+        <li><a href="{% url 'yourclients' %}">yourclients</a></li>
+        {% endif %}
+        {% if dt.cstatus%}
+        <li><a href="{% url 'yourtrainer' %}">yourtrainer</a></li>
+        {% endif %}
+        {% if dt.tstatus or dt.cstatus%}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+        {% if not dt.cstatus and not dt.tstatus%}
+        <li><div class="dropdown">
+            <button class="dropbtn">signup/login</button>
+            <div class="dropdown-content">
+              <a href="{% url 'trainerlogin' %}">trainer</a>
+              <a href="{% url 'clientlogin' %}">client</a>
+              
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        
+    </ul>
+   
+</div>
+    
+    <div style="display:grid;grid-template-columns: auto auto auto;">
+    {% for i in cl%}
+    <div class="container">
+        <h1>{{i.name}}</h1>
+        <p>gender:{{i.gender}}</p>
+        <p>age:{{i.age}}</p>
+        <p>email:{{i.email}}</p>
+        <h2>select diet paln</h2>
+        <form>
+            <input type="file" required>
+            <button type="submit" class="upload-btn" >upload</button>
+        </form>
+    </div>
+    {% endfor%}
+    
+    </div>
+    
+</body>
+</html>

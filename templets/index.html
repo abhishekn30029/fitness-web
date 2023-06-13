@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <title>AA Fitness</title>
+</head>
+<body style="background:url('{% static 'images/indexbg.jpg' %}') ;background-repeat: no-repeat;
+background-size:cover;">
+   
+    <div class="frontpage">
+        <div class="navbar">
+            <img src="{% static 'images/logo.png' %}">
+            {% if tstatus or cstatus %}
+            <p style="color:white;margin-top: 20px;font-size: 25px;">welcome {{name}}</p>
+            {% endif %}
+            
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'trainers' %}">trainers</a></li>
+            {% if tstatus%}
+            <li><a href="{% url 'yourclients' %}">yourclients</a></li>
+            {% endif %}
+            {% if cstatus%}
+            <li><a href="{% url 'yourtrainer' %}">yourtrainer</a></li>
+            {% endif %}
+            {% if tstatus or cstatus%}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
+            {% if not cstatus and not tstatus%}
+            <li><div class="dropdown">
+                <button class="dropbtn">signup/login</button>
+                <div class="dropdown-content">
+                  <a href="{% url 'trainerlogin' %}">trainer</a>
+                  <a href="{% url 'clientlogin' %}">client</a>
+                  
+                </div>
+              </div>
+            </li>
+            {% endif %}
+            
+        </ul>
+       
+    </div>
+    <h1>We help you to build your<br> dream physique.</h1>
+    <h3>you just need determination and we will guide you!</h3>
+    <a href="trainers/"class="button"><span>&#8594</span>Our Trainers</a>
+    
+
+    </div>
+
+    
+</body>
+</html>
